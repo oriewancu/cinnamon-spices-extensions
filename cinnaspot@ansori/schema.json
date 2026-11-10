@@ -1,0 +1,84 @@
+{
+    "header_general": {
+        "type": "header",
+        "description": "General Settings"
+    },
+    "keybinding": {
+        "type": "keybinding",
+        "default": "<Super>space",
+        "description": "CinnaSpot Keyboard Shortcut"
+    },
+    "custom_placeholder": {
+        "type": "entry",
+        "default": "Search apps, files, settings, commands...",
+        "description": "Search Placeholder Text"
+    },
+    "max_search_results": {
+        "type": "spinbutton",
+        "default": 5,
+        "min": 1,
+        "max": 20,
+        "step": 1,
+        "units": "items",
+        "description": "Max Search Results"
+    },
+
+    "header_windows": {
+        "type": "header",
+        "description": "Opened Windows"
+    },
+    "show_opened_windows": {
+        "type": "switch",
+        "default": true,
+        "description": "Enable Opened Windows"
+    },
+    "show_thumbnails": {
+        "type": "switch",
+        "default": true,
+        "description": "Show Window Preview"
+    },
+    "window_shortcut": {
+        "type": "keybinding",
+        "default": "Tab",
+        "description": "Shortcut to Toggle Opened Windows"
+    },
+    "max_window_results": {
+        "type": "spinbutton",
+        "default": 5,
+        "min": 1,
+        "max": 20,
+        "step": 1,
+        "units": "items",
+        "description": "Max Opened Window Results"
+    },
+
+    "header_files": {
+        "type": "header",
+        "description": "File Search"
+    },
+    "enable_file_search": {
+        "type": "switch",
+        "default": false,
+        "description": "Enable File Search"
+    },
+
+    "header_scripts": {
+        "type": "header",
+        "description": "Script Runner Settings"
+    },
+    "script_prefix": {
+        "type": "entry",
+        "default": "sh",
+        "description": "Trigger word for Script Runner"
+    },
+    "script_paths": {
+        "type": "entry",
+        "default": "~/scripts",
+        "description": "Directories to Search for Scripts (comma-separated)"
+    },
+    "terminal_app": {
+        "type": "entry",
+        "default": "x-terminal-emulator -e",
+        "description": "Terminal Execution Command"
+    }
+}
