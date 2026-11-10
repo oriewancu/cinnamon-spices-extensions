@@ -1,58 +1,51 @@
 # CinnaSpot
 
-Spotlight-inspired launcher for Cinnamon.
+A fast, Spotlight-inspired app launcher and productivity tool for Cinnamon.
 
-## Main UI
+---
 
-- Opens directly with focus on the search field.
-- Empty state shows a **Show Opened Windows** action.
-- `Tab` toggles the opened-window view without changing the persistent setting.
-- `Esc` closes CinnaSpot.
-- `Up/Down` navigates results.
-- `Enter` activates the selected result.
-- **Multi-display support:** CinnaSpot appears on the monitor where your mouse cursor is currently located when you press the hotkey. Move your cursor to another display and the launcher will open there instead.
+## Features
 
-## Search
+- **Instant Application Search**: Lightning-fast searching across all installed applications.
+- **Opened Windows Sidebar**: View and switch between opened windows across workspaces with live preview support.
+- **System Info Sidebar**: Real-time monitoring for CPU usage, RAM, Swap, and Disk space.
+- **Built-in Calculator**: Perform quick mathematical calculations directly in the search bar and copy results instantly.
+- **System Actions**: Quick triggers for power actions (Shutdown, Restart, Suspend) and session actions (Logout, Lock Screen, Switch User).
+- **Script Runner**: Run custom shell and python scripts directly using a trigger prefix (e.g., `sh myscript`).
+- **Multi-Display Support**: Automatically opens on the monitor where your mouse cursor is currently located.
+- **Clean Tabbed Settings**: Organized settings layout utilizing tabs (General, Windows, System Info, Appearance, Actions, Scripts) for a clean and clutter-free configuration experience.
 
-The global `Max Search Results` setting is used by applications, files and scripts.
+---
 
-Opened windows additionally respect `Max Opened Window Results`, so the effective window limit is the smaller of the two.
+## Keyboard Shortcuts & Navigation
 
-## Script runner
+- **`<Super>space`**: Toggle CinnaSpot open/close (configurable in settings).
+- **`Esc`**: Close CinnaSpot.
+- **`Tab`**: Switch focus between search results and the opened windows sidebar.
+- **`Up / Down`**: Navigate through items.
+- **`Enter`**: Select/activate the focused item or action.
 
-Examples:
-
-```text
-sh
-sh 
-sh docker
-sh backup
-```
-
-`sh` / `sh ` lists scripts, but is capped by `Max Search Results`.
-
-The implementation also guards against async search race conditions. If the user types another query before an earlier script search completes, the old result is discarded. Script paths and files are deduplicated by path.
-
-## Important note about thumbnails
-
-Cinnamon's Meta.Window API does not provide a stable cross-version live thumbnail API that can safely be used across all targeted Cinnamon versions. The "Show Window Preview" option therefore uses an app-icon preview card rather than a live screenshot thumbnail.
+---
 
 ## Installation
 
-Copy the extension directory to:
+1. Copy the extension directory to your local Cinnamon extensions folder:
+   ```bash
+   cp -r cinnaspot@ansori ~/.local/share/cinnamon/extensions/
+   ```
+2. Enable the extension from Cinnamon's **Extension Settings** or via command line:
+   ```bash
+   cinnamon-settings extensions
+   ```
 
-```text
-~/.local/share/cinnamon/extensions/cinnaspot@ansori/
-```
+---
 
-Then enable it from Cinnamon Extensions.
+## Configuration
 
-## Settings
-
-Run:
-
-```text
-cinnamon-settings extensions
-```
-
-and open CinnaSpot settings.
+CinnaSpot's settings are cleanly grouped into tabs via Cinnamon's configuration layout:
+- **General**: Hotkey, placeholder text, and maximum search results.
+- **Windows**: Opened windows sidebar options, font size, and limits.
+- **System Info**: Right sidebar metrics and disk partition path.
+- **Appearance**: Theme (Dark/Light), background opacity, and result font size.
+- **Actions**: Power and session action toggles.
+- **Scripts**: Script runner prefix, search paths, and terminal execution command.
