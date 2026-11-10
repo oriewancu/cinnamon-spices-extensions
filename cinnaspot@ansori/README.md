@@ -10,6 +10,7 @@ Spotlight-inspired launcher for Cinnamon.
 - `Esc` closes CinnaSpot.
 - `Up/Down` navigates results.
 - `Enter` activates the selected result.
+- **Multi-display support:** CinnaSpot appears on the monitor where your mouse cursor is currently located when you press the hotkey. Move your cursor to another display and the launcher will open there instead.
 
 ## Search
 

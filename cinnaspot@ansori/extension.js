@@ -526,17 +526,74 @@ class SpotlightExtension {
         }
     }
 
+    _getActiveMonitorGeometry() {
+        try {
+            // Use Cinnamon's global pointer for screen-space coordinates
+            let [cx, cy] = global.get_pointer();
+            let n = global.screen.get_n_monitors();
+
+            for (let i = 0; i < n; i++) {
+                let g = global.screen.get_monitor_geometry(i);
+                if (cx >= g.x && cx < g.x + g.width && cy >= g.y && cy < g.y + g.height) {
+                    return { x: g.x, y: g.y, width: g.width, height: g.height };
+                }
+            }
+
+            // Fallback to primary monitor
+            let primary = null;
+            if (typeof global.screen.get_primary_monitor === 'function') {
+                primary = global.screen.get_primary_monitor();
+            }
+            if (primary !== null && primary !== undefined) {
+                let g = global.screen.get_monitor_geometry(primary);
+                return { x: g.x, y: g.y, width: g.width, height: g.height };
+            }
+
+            // Fallback to monitor 0
+            let g0 = global.screen.get_monitor_geometry(0);
+            return { x: g0.x, y: g0.y, width: g0.width, height: g0.height };
+        } catch (e) {}
+        return { x: 0, y: 0, width: global.stage.width, height: global.stage.height };
+    }
+
+    _positionUI(monitor) {
+        // Center spotlight on the active monitor
+        this.spotlightBox.set_position(
+            monitor.x + Math.round((monitor.width - 720) / 2),
+            monitor.y + Math.round((monitor.height - (monitor.height * 0.75)) / 2)
+        );
+
+        // Position opened-windows sidebar on the left side of the active monitor
+        if (this.sidebarContainer) {
+            this.sidebarContainer.set_position(monitor.x, monitor.y);
+            this.sidebarBox.set_position(0, Math.round((monitor.height - (monitor.height * 0.85)) / 2));
+        }
+
+        // Position system-info sidebar on the right side of the active monitor
+        if (this.sysInfoContainer) {
+            this.sysInfoContainer.set_position(monitor.x + monitor.width - 360, monitor.y);
+            this.sysInfoBox.set_position(0, Math.round((monitor.height - (monitor.height * 0.85)) / 2));
+        }
+    }
+
     _toggleSpotlight() {
         this.isOpen = !this.isOpen;
+
+        if (this.isOpen) {
+            // Position UI on the monitor where the cursor currently is
+            let monitor = this._getActiveMonitorGeometry();
+            this._positionUI(monitor);
+        }
+
         if (this.mainContainer) this.mainContainer.visible = this.isOpen;
         if (this.sidebarContainer) this.sidebarContainer.visible = this.isOpen && this.show_opened_windows;
-        
+
         this._toggleSysInfoPanel();
 
         if (this.isOpen) {
             this.activePanel = 'main';
             this._cacheApplications();
-            Main.pushModal(this.mainContainer); 
+            Main.pushModal(this.mainContainer);
             global.stage.set_key_focus(this.searchEntry);
             this._triggerSearch();
         } else {
